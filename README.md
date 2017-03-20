@@ -10,4 +10,4 @@ This software may be modified and distributed under the terms
 of the MIT license. See the [LICENSE][license-link] file for details.
 
 [license-link]: /LICENSE
-[latest-release-link]: /releases/tag/release%2F1.0.00
+[latest-release-link]: https://github.com/CAAPIM/Mobile-Dev-Console-APIs/releases/tag/release%2F1.0.00
