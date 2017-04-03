@@ -3,7 +3,7 @@
     "info": {
         "version": "1.0.00",
         "title": "Developer-Console-1.0.00",
-        "description": "All API's available for the developer console. By default they are CORS enabled."
+        "description": "All API's available for the developer console. By default they are CORS enabled. Copyright (c) 2016 CA. All rights reserved."
     },
     "host": "example.ca.com",
     "basePath": "/console",
