@@ -16,4 +16,4 @@ By downloading or using any content from this repository, you acknowledge that y
 [install-link]: https://docops.ca.com/display/MAG/.Install+Mobile+Developer+Console+Solution+Kit+v4.0
 [license-link]: /LICENSE
 [terms-link]: /ca-trial-agreement.pdf
-[latest-release-link]: https://github.com/CAAPIM/Mobile-Dev-Console-APIs/releases/tag/release%2F1.0.00
+[latest-release-link]: https://github.com/CAAPIM/Mobile-Dev-Console-APIs/releases/latest
