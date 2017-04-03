@@ -1,0 +1,820 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.00",
+        "title": "Developer-Console-1.0.00",
+        "description": "All API's available for the developer console. By default they are CORS enabled."
+    },
+    "host": "example.ca.com",
+    "basePath": "/console",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/apps": {
+            "get": {
+                "description": "Retrieve clients and client_id's (only of type=master-key) of the current user",
+                "operationId": "get_clients_clientIds",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Credential in form of an OAuth 2.0 access_token of type 'Bearer'"
+                    },
+                    {
+                        "name": "org",
+                        "in": "query",
+                        "required": false,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Select clients/ clients_id's associated with the given org(anization)"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "x-is-map": false,
+                        "type": "integer",
+                        "description": "Limits the list of returned clients/ client_id's"
+                    },
+                    {
+                        "name": "targetuser",
+                        "in": "query",
+                        "required": false,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Retrieve the values on behalf of the given targetuser. This is only accepted if the current user has an administrative role"
+                    },
+                    {
+                        "name": "master_key",
+                        "in": "query",
+                        "required": false,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "True to only return master_keys. False otherwise."
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Details of the registered clients",
+                        "schema": {
+                            "$ref":"#/definitions/clients"
+                        }
+                    },
+                    "401": {
+                        "description": "validation error"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "405": {
+                        "description": "The HTTP method is not valid"
+                    },
+                    "default": {
+                        "description": "unknown error"
+                    }
+                }
+            },
+            "post": {
+                "description": "Register a new OAuth client of the current user",
+                "operationId": "register_client",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Credential in form of an OAuth 2.0 access_token of type 'Bearer'"
+                    },
+                    {
+                        "name": "client",
+                        "in": "body",
+                        "required": true,
+                        "x-is-map": false,
+                        "schema": {
+                            "$ref":"#/definitions/register_client"
+                        },
+                        "description": "Details of the OAuth client"
+                    },
+                    {
+                        "name": "targetuser",
+                        "in": "query",
+                        "required": false,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Register the values on behalf of the given targetuser. This is only accepted if the current user has an administrative role"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Details of the newly registered client",
+                        "schema": {
+                            "$ref":"#/definitions/client"
+                        }
+                    },
+                    "401": {
+                        "description": "validation error"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "405": {
+                        "description": "The HTTP method is not valid"
+                    },
+                    "default": {
+                        "description": "unknown error"
+                    }
+                }
+            }
+        },
+        "/apps/{client}": {
+            "get": {
+                "description": "Retrieve clients client_id's (only of type=master-key) of the current user",
+                "operationId": "get_client_ids",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Credential in form of an OAuth 2.0 access_token of type 'Bearer'"
+                    },
+                    {
+                        "name": "client",
+                        "in": "path",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "The ID of the referenced client"
+                    },
+                    {
+                        "name": "targetuser",
+                        "in": "query",
+                        "required": false,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Retrieve the values on behalf of the given targetuser. This is only accepted if the current user has an administrative role"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of client_id's (type=master-key) registered for the client",
+                        "schema": {
+                            "$ref": "#/definitions/client_ids"
+                        }
+                    },
+                    "401": {
+                        "description": "validation error"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "405": {
+                        "description": "The HTTP method is not valid"
+                    },
+                    "default": {
+                        "description": "unknown error"
+                    }
+                }
+            },
+            "post": {
+                "description": "Register a new OAuth client_id (type=master-key)",
+                "operationId": "register_client_id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Credential in form of an OAuth 2.0 access_token of type 'Bearer'"
+                    },
+                    {
+                        "name": "client",
+                        "in": "path",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "The ID of the referenced client"
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "body",
+                        "required": true,
+                        "x-is-map": false,
+                        "schema": {
+                            "$ref":"#/definitions/register_client_id"
+                        },
+                        "description": "Details of the OAuth client_id"
+                    },
+                    {
+                        "name": "targetuser",
+                        "in": "query",
+                        "required": false,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Register the values on behalf of the given targetuser. This is only accepted if the current user has an administrative role"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Details of the newly registered client_id",
+                        "schema": {
+                            "$ref":"#/definitions/client_id"
+                        }
+                    },
+                    "401": {
+                        "description": "validation error"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "405": {
+                        "description": "The HTTP method is not valid"
+                    },
+                    "default": {
+                        "description": "Unknown error"
+                    }
+                }
+            },
+            "put": {
+                "description": "Updates an existing OAuth client",
+                "operationId": "update_client",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Credential in form of an OAuth 2.0 access_token of type 'Bearer'"
+                    },
+                    {
+                        "name": "client",
+                        "in": "path",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "The ID of the referenced client"
+                    },
+                    {
+                        "name": "client",
+                        "in": "body",
+                        "required": true,
+                        "x-is-map": false,
+                        "schema": {
+                            "$ref":"#/definitions/update_client"
+                        },
+                        "description": "Details of the OAuth client"
+                    },
+                    {
+                        "name": "targetuser",
+                        "in": "query",
+                        "required": false,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Update the values on behalf of the given targetuser. This is only accepted if the current user has an administrative role"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Returns no content if the update was successful"
+                    },
+                    "401": {
+                        "description": "validation error"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "405": {
+                        "description": "The HTTP method is not valid"
+                    },
+                    "default": {
+                        "description": "Unknown error"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete an OAuth client and all associated client_id's",
+                "operationId": "delete_client",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Credential in form of an OAuth 2.0 access_token of type 'Bearer'"
+                    },
+                    {
+                        "name": "client",
+                        "in": "path",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "The ID of the referenced client"
+                    },
+                    {
+                        "name": "targetuser",
+                        "in": "query",
+                        "required": false,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Delete the values on behalf of the given targetuser. This is only accepted if the current user has an administrative role"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Returns no content if the delete was successful"
+                    },
+                    "401": {
+                        "description": "validation error"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "405": {
+                        "description": "The HTTP method is not valid"
+                    },
+                    "default": {
+                        "description": "Unknown error"
+                    }
+                }
+            }
+        },
+        "/apps/client/{client_id}": {
+            "get": {
+                "description": "Retrieve a client_id of the current user",
+                "operationId": "get_client_id",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Credential in form of an OAuth 2.0 access_token of type 'Bearer'"
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "path",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "The client_id"
+                    },
+                    {
+                        "name": "targetuser",
+                        "in": "query",
+                        "required": false,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Retrieve the values on behalf of the given targetuser. This is only accepted if the current user has an administrative role"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A list of client_id",
+                        "schema": {
+                            "$ref":"#/definitions/client_id"
+                        }
+                    },
+                    "401": {
+                        "description": "validation error"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "405": {
+                        "description": "The HTTP method is not valid"
+                    },
+                    "default": {
+                        "description": "unknown error"
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a client_id of the current user",
+                "operationId": "update_client_id",
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Credential in form of an OAuth 2.0 access_token of type 'Bearer'"
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "path",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "The client_id"
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "body",
+                        "required": true,
+                        "x-is-map": false,
+                        "schema": {
+                            "$ref":"#/definitions/update_client_id"
+                        },
+                        "description": "Details of the OAuth client_id"
+                    },
+                    {
+                        "name": "targetuser",
+                        "in": "query",
+                        "required": false,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Update the values on behalf of the given targetuser. This is only accepted if the current user has an administrative role"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Returns no content if the update was successful"
+                    },
+                    "401": {
+                        "description": "validation error"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "405": {
+                        "description": "The HTTP method is not valid"
+                    },
+                    "default": {
+                        "description": "Unknown error"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a client_id of the current user",
+                "operationId": "delete_client_id",
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Credential in form of an OAuth 2.0 access_token of type 'Bearer'"
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "path",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "The client_id"
+                    },
+                    {
+                        "name": "targetuser",
+                        "in": "query",
+                        "required": false,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Delete the values on behalf of the given targetuser. This is only accepted if the current user has an administrative role"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Returns no content if the delete was successful"
+                    },
+                    "401": {
+                        "description": "validation error"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "405": {
+                        "description": "The HTTP method is not valid"
+                    },
+                    "default": {
+                        "description": "Unknown error"
+                    }
+                }
+            }
+        },
+        "/apps/export/{client_id}": {
+            "get": {
+                "description": "Retrieve a JSON configuration of a client_id",
+                "operationId": "get_client_id_export",
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "Credential in form of an OAuth 2.0 access_token of type 'Bearer'"
+                    },
+                    {
+                        "name": "client_id",
+                        "in": "path",
+                        "required": true,
+                        "x-is-map": false,
+                        "type": "string",
+                        "description": "The client_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "A JSON structure that contains configuration details of the given client_id"
+                    },
+                    "401": {
+                        "description": "validation error"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "405": {
+                        "description": "The HTTP method is not valid"
+                    },
+                    "default": {
+                        "description": "unknown error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "client": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the client"
+                },
+                "organization": {
+                    "type": "string",
+                    "description": "The organization this client should be associated with"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of client",
+                    "enum": [
+                        "public","confidential"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A short description what this client is used for"
+                },
+                "created": {
+                    "type": "integer",
+                    "description": "The time is seconds (10-digits) of when the client was registered"
+                },
+                "client": {
+                    "type": "string",
+                    "description": "An identifier representing the client"
+                },
+                "created_by": {
+                    "type": "string",
+                    "description": "The username of the user who registered the client"
+                },
+                "appStats": {
+                    "$ref":"#/definitions/appStats"
+                },
+                "client_ids": {
+                    "$ref":"#/definitions/client_ids"
+                }
+            },
+            "title": "OAuthClient"
+        },
+        "clients": {
+            "type": "array",
+            "items": {
+                "$ref":"#/definitions/client"
+            }
+        },
+        "register_client": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the client"
+                },
+                "organization": {
+                    "type": "string",
+                    "description": "The organization this client should be associated with"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of client",
+                    "enum": [
+                        "public","confidential"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A short description what this client is used for"
+                }
+            },
+            "title": "OAuthClientRegister"
+        },
+        "update_client": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the client"
+                },
+                "organization": {
+                    "type": "string",
+                    "description": "The organization this client should be associated with"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of client",
+                    "enum": [
+                        "public","confidential"
+                    ]
+                },
+                "description": {
+                    "type": "string",
+                    "description": "A short description what this client is used for"
+                }
+            },
+            "title": "OAuthClientUpdate"
+        },
+        "client_id": {
+            "type": "object",
+            "properties": {
+                "client_id": {
+                    "type": "string",
+                    "description": "The client_id"
+                },
+                "created": {
+                    "type": "integer",
+                    "description": "The time is seconds (10-digits) of when the client was registered"
+                },
+                "scope": {
+                    "type": "string",
+                    "description": "A space separate list of SCOPE values valid for this client_id"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the associated client name"
+                },
+                "expiration": {
+                    "type": "string",
+                    "description": "The time is seconds (10-digits) of when the client becomes invalid. '0' indicates no expiration"
+                },
+                "client": {
+                    "type": "string",
+                    "description": "The ID of the referenced client. Matches the value 'client' of the object 'client'"
+                },
+                "created_by": {
+                    "type": "string",
+                    "description": "The username of the user who registered the client_id"
+                },
+                "platform": {
+                    "type": "string",
+                    "description": "The platform or environment at which the client_id is valid",
+                    "example":"Android"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "The status of the client_id",
+                    "enum": [
+                        "enabled", "disabled"
+                    ]
+                },
+                "redirect_uri": {
+                    "type": "string",
+                    "description": "The redirect_uri(s) valid for this client_id",
+                    "example": "myscheme://company.com/client,https://company.com/browser/client"
+                }
+            },
+            "title": "OAuthClientID"
+        },
+        "client_ids": {
+            "type": "array",
+            "items": {
+                "$ref":"#/definitions/client_id"
+            }
+        },
+        "register_client_id": {
+            "type": "object",
+            "properties": {
+                "scope": {
+                    "type": "string",
+                    "description": "A space separated list of SCOPE values"
+                },
+                "platform": {
+                    "type": "string",
+                    "description": "The platform or environment at which the client_id is valid",
+                    "example":"Android"
+                },
+                "redirect_uri": {
+                    "type": "string",
+                    "description": "The redirect_uri(s) valid for this client_id",
+                    "example": "myscheme://company.com/client,https://company.com/browser/client"
+                }
+            },
+            "title": "OAuthClientIDRegister"
+        },
+        "update_client_id": {
+            "type": "object",
+            "properties": {
+                "scope": {
+                    "type": "string",
+                    "description": "A space separate list of SCOPE values valid for this client_id"
+                },
+                "platform": {
+                    "type": "string",
+                    "description": "The platform or environment at which the client_id is valid",
+                    "example":"Android"
+                },
+                "status": {
+                    "type": "string",
+                    "description": "The status of the client_id",
+                    "enum": [
+                        "enabled", "disabled"
+                    ]
+                },
+                "redirect_uri": {
+                    "type": "string",
+                    "description": "The redirect_uri(s) valid for this client_id",
+                    "example": "myscheme://company.com/client,https://company.com/browser/client"
+                }
+            },
+            "title": "OAuthClientIDUpdate"
+        },
+        "appStats": {
+            "type": "object",
+            "properties": {
+                "installCount": {
+                    "type": "integer",
+                    "description": "The number of installed instances of this client"
+                },
+                "activeUsers": {
+                    "type": "integer",
+                    "description": "The number of active users having an OAuth session for this client"
+                }
+            },
+            "title": "AppStatistics"
+        }
+    },
+    "securityDefinitions": {
+        "developer_console_auth": {
+            "type":"oauth2",
+            "flow":"accessCode",
+            "authorizationURL":"https://example.ca.com/auth/oauth/v2/authorize",
+            "tokenURL":"https://example.ca.com/auth/oauth/v2/token",
+            "scopes":{
+                "devconsole":"SCOPE required to access the developer console API's"
+            }
+        }
+    },
+    "security": {
+        "developer_console_auth":["devconsole"]
+    }
+}
