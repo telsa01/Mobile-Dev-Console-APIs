@@ -1,7 +1,7 @@
 # Mobile Developer Console APIs 
 This repository is contains the the CA Mobile Developer Console APIs Solution Kit for the CA API Gateway. 
 
-Download the latest version of the [CA Mobile Developer Console APIs Solution Kit][latest-release-link]. 
+Download the latest version of the CA Mobile Developer Console APIs Solution Kit from the [releases area][latest-release-link]. 
 
 ## Installation
 In order to install the Mobile Developer Console Solution Kit follow the instructions on the [CA Technologies Documentation Site][install-link].
