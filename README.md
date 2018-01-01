@@ -13,7 +13,7 @@ This solution kit exposes APIs used by the developer console. For more details o
 By downloading or using any content from this repository, you acknowledge that you have read and agree to the [terms and conditions][terms-link] for using this CA component.
 
 [swagger-link]: /swagger.json
-[install-link]: https://docops.ca.com/display/MAG/.Install+the+MDC+Solution+Kit+v4.1
+[install-link]: https://docops.ca.com/display/MAG41/Install+the+MDC+Solution+Kit
 [license-link]: /LICENSE
 [terms-link]: /ca-trial-agreement.pdf
 [latest-release-link]: https://github.com/CAAPIM/Mobile-Dev-Console-APIs/releases/latest
